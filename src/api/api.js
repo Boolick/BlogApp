@@ -7,7 +7,7 @@ export const api = createApi({
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/${url}`
     );
-     
+
     return { data: response.data };
   },
   endpoints: (builder) => ({
@@ -15,19 +15,19 @@ export const api = createApi({
       query: () => ({ url: "posts" }),
     }),
     getComments: builder.query({
-      query: () => "/comments",
+      query: (postId) => ({ url: `comments?postId=${postId}` }),
     }),
     getAlbums: builder.query({
       query: () => "/albums",
     }),
     getPhotos: builder.query({
-      query: () => "/photos",
+      query: () => ({ url: "photos" }),
     }),
     getTodos: builder.query({
       query: () => "/todos",
     }),
     getUsers: builder.query({
-      query: () => "/users",
+      query: () => ({ url: "users" }),
     }),
   }),
 });

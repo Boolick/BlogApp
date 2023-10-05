@@ -1,6 +1,6 @@
+ 
 
-
-function User() {
+function Layout() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function User() {
   )
 }
 
-export default User
+export default Layout
