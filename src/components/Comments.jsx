@@ -1,4 +1,4 @@
-import { Spinner } from "react-bootstrap";
+import { Spinner , NavLink} from "react-bootstrap";
 import { useGetCommentsQuery } from "../api/api";
 
 // eslint-disable-next-line react/prop-types
@@ -20,7 +20,7 @@ function Comments({ postId }) {
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
           <div key={comment.id}>
-            <a>{comment.email}</a>
+            <NavLink>{comment.email}</NavLink>
             <p>{comment.body}</p>
           </div>
         ))

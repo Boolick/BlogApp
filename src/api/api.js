@@ -17,14 +17,11 @@ export const api = createApi({
     getComments: builder.query({
       query: (postId) => ({ url: `comments?postId=${postId}` }),
     }),
-    getAlbums: builder.query({
-      query: () => "/albums",
-    }),
     getPhotos: builder.query({
       query: () => ({ url: "photos" }),
     }),
-    getTodos: builder.query({
-      query: () => "/todos",
+    getUsersPosts: builder.query({
+      query: (userId) => ({ url: `users/${userId}/posts` }),
     }),
     getUsers: builder.query({
       query: () => ({ url: "users" }),
@@ -35,9 +32,8 @@ export const api = createApi({
 export const {
   useGetPostsQuery,
   useGetCommentsQuery,
-  useGetAlbumsQuery,
   useGetPhotosQuery,
-  useGetTodosQuery,
+  useGetUsersPostsQuery,
   useGetUsersQuery,
 } = api;
 
