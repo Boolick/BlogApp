@@ -1,5 +1,5 @@
-import { Spinner , NavLink} from "react-bootstrap";
-import { useGetCommentsQuery } from "../api/api";
+import { Spinner, NavLink } from "react-bootstrap";
+import { useGetCommentsQuery } from "../store/api/api";
 
 // eslint-disable-next-line react/prop-types
 function Comments({ postId }) {

@@ -1,44 +1,65 @@
-import {
-  //useGetPhotosQuery,
+import { useSelector } from "react-redux";
+import { Card,   Image } from "react-bootstrap";
+import { useGetUsersQuery, useGetUsersPostsQuery } from "../store/api/api";
 
-  useGetUsersQuery,
-} from "../api/api";
+function User() {
+  const userId = useSelector((state) => state.userId);
+  const { data: posts } = useGetUsersPostsQuery(userId);
+  const { data: users } = useGetUsersQuery();
+  const currentUser = users?.find((user) => user.id === userId.userId);
+  const address = currentUser.address;
 
-// eslint-disable-next-line react/prop-types, no-unused-vars
-function User({ userId }) {
-  const { data: users, isLoading, isError } = useGetUsersQuery(userId);
-  /*  const {
-    data: userPosts,
-    isLoading,
-    isError,
-    
-  } = useGetUsersPostsQuery(userId); */
-  //  const { data: photos } = useGetPhotosQuery(selectedUserId);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error is error</div>;
+  console.log(useGetUsersPostsQuery);
+  console.log(userId);
+  console.log(posts);
+  console.log(currentUser);
 
   return (
-    <>
-      <div>
-        {users && users.length > 0 ? (
-          users.map((user) => <div key={user.id}>{user.username}</div>)
-        ) : (
-          <p>No comments yet</p>
-        )}
-      </div>
-    </>
+    <Card>
+      <Image class="card-img-top" src=" " alt="Card image"></Image>
+      <h2>{currentUser && currentUser.name}</h2>
+      <Card.Body>
+      {currentUser &&
+        Object.entries(currentUser).map(([key, value]) => {
+          if (typeof value === "object") {
+            return;
+          } else {
+            return (
+              <Card.Text key={key} className="d-flex flex-row justify-content-start mb-2" >
+                <Card.Text>{key}:</Card.Text><Card.Text>{value}</Card.Text>
+              </Card.Text>
+            );
+          }
+        })}
+
+      <h2>Address</h2>
+      {Object.entries(address).map(([key, value]) => {
+        if (typeof value === "object") {
+          return Object.entries(value).map(([subKey, subValue]) => (
+            <h3 key={subKey}>
+              {subKey}: {subValue}
+            </h3>
+          ));
+        } else {
+          return (
+            <h3 key={key}>
+              {key}: {value}
+            </h3>
+          );
+        }
+      })}
+      <h2>Posts</h2>
+      {users.map(
+        (user) =>
+          console.log(user.id) || (
+            <div key={user.id}>
+              <h3>{user.email}</h3>
+              <p>{user.city}</p>
+            </div>
+          )
+      )}
+      </Card.Body>
+    </Card>
   );
 }
 export default User;
-
-/*   return (
-    <div>
-      {users.map((user) => {
-        <Card key={user.id}>
-          <Img variant="top" />
-        </Card>;
-      })}
-    </div>
-  );
-} */

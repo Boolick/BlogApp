@@ -1,19 +1,24 @@
 import { Card, Alert, Spinner, Button, Collapse } from "react-bootstrap";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useGetPostsQuery } from "../api/api";
+import { setUserId } from "../store/actions/action";
+import { useGetPostsQuery } from "../store/api/api";
 import Comments from "./Comments";
-
+import { useGetUsersQuery, useGetUsersPostsQuery } from "../store/api/api";
 import PaginationComponent from "../features/posts/PaginationComponent";
 
 function Posts() {
+  const dispatch = useDispatch();
   const [openPostId, setOpenPostId] = useState(null);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-
   const [currentPage, setCurrentPage] = useState(1); //   для пагинации
   const postsPerPage = 2;
+
+  const { data: users } = useGetUsersQuery();
+  const { data: usersPosts } = useGetUsersPostsQuery(1);
+  console.log(users, usersPosts);
 
   const { data: posts, isLoading, isError } = useGetPostsQuery("posts");
   const indexOfLastPost = currentPage * postsPerPage;
@@ -44,13 +49,18 @@ function Posts() {
     if (id === openPostId) {
       setOpenPostId(null);
       setSelectedPostId(null);
+      dispatch(setUserId(id));
     } else {
       setOpenPostId(id);
       setSelectedPostId(id);
+      dispatch(setUserId(id));
     }
   };
+  const handleUserClick = (id) => {
+    dispatch(setUserId(id)); // вот тут надо диспатчить setUserId
+    navigate("/user");
+  };
 
-  console.log(selectedUserId);
   return (
     <>
       {posts && currentPosts && currentPosts.length > 0 ? (
@@ -78,8 +88,7 @@ function Posts() {
             <Button
               variant="primary"
               onClick={() => {
-                setSelectedUserId(post.userId);
-                navigate("/user");
+                handleUserClick(post.id);
               }}
             >
               Launch vertically centered modal
