@@ -7,18 +7,15 @@ import {
   Collapse,
   Container,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import SkeletonPost from "../components/Skeleton";
 import { useGetPostsQuery } from "../store/api/api";
-import { setUserId } from "../store/actions/action";
 import Comments from "../components/Comments";
-import PaginationComponent from "../features/posts/PaginationComponent";
-import { ShufflePosts } from "../features/posts/ShufflePosts";
+import PaginationComponent from "../components/PaginationComponent";
+import { shufflePosts } from "../features/posts/shufflePosts";
 
 function Posts() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openPostId, setOpenPostId] = useState(null);
   const [selectedPostId, setSelectedPostId] = useState(null);
@@ -26,22 +23,14 @@ function Posts() {
   const postsPerPage = 5; // Количество постов на страницу
   const [isLoadImg, setIsLoadImg] = useState(false);
   const [shuffledPosts, setShuffledPosts] = useState([]);
-
   const { data: posts, isLoading, isError } = useGetPostsQuery("posts");
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   //перемешиваем посты
   useEffect(() => {
     if (posts) {
-      setShuffledPosts(ShufflePosts(posts));
+      setShuffledPosts(shufflePosts(posts));
     }
   }, [posts]);
-
-  const currentPosts = shuffledPosts
-    ? shuffledPosts.slice(indexOfFirstPost, indexOfLastPost)
-    : [];
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleCommentsClick = useCallback(
     (id) => {
@@ -52,12 +41,19 @@ function Posts() {
         setOpenPostId(id);
         setSelectedPostId(id);
       }
-      dispatch(setUserId(id));
       document
         .getElementById(`card-${id}`)
         .scrollIntoView({ behavior: "smooth" });
     },
-    [openPostId, dispatch]
+    [openPostId]
+  );
+
+  const handleUserClick = useCallback(
+    (id) => {
+      localStorage.setItem("userId", id);
+      navigate("/user");
+    },
+    [navigate]
   );
 
   if (isError) {
@@ -68,17 +64,18 @@ function Posts() {
     );
   }
 
-  const handleUserClick = (id) => {
-    localStorage.setItem("userId", id);
-    dispatch(setUserId(id)); // вот тут надо диспатчить setUserId
-    navigate("/user");
-  };
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = shuffledPosts
+    ? shuffledPosts.slice(indexOfFirstPost, indexOfLastPost)
+    : [];
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Container fluid style={{ background: " #E7E6E0" }}>
       {isLoading ? (
         Array.from({ length: postsPerPage }, (_, index) => (
-          <SkeletonPost key={index} />
+          <SkeletonPost key={index} /> // создаём массив скелетонов для загрузки
         ))
       ) : currentPosts && currentPosts.length > 0 ? (
         currentPosts.map((post) => (

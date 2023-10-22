@@ -18,6 +18,10 @@ function UserAvatar({ src }) {
         src={src}
         alt="Avatar image"
         onLoad={() => setIsLoadAvatar(false)}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "https://via.placeholder.com/150/771796";
+        }}
         hidden={isLoadAvatar}
       />
     </>
