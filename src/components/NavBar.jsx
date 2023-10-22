@@ -1,44 +1,57 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import {
+  Container,
+  Nav,
+  Navbar,
+  Offcanvas,
+  Image,
+  Badge,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <>
-      {[false ].map((expand) => (
+      {[false].map((expand) => (
         <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
           <Container fluid>
-            <Navbar.Brand href="#"> BlogApp</Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <div></div>
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-${expand}`}
+              style={{ position: "fixed", zIndex: "10" }}
+            />
+            <Navbar.Brand>BlogApp </Navbar.Brand>
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               placement="start"
             >
               <Offcanvas.Header closeButton>
+                <Image
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                  }}
+                  src={`https://robohash.org/Alex.png?bgset=bg1 `}
+                  alt="Avatar"
+                />
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  BlogApp
+                  Alexander Bullo
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
+                <Badge bg="secondary"> bulloalexander77@gmail.com</Badge>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1">Home</Nav.Link>
-                  <Nav.Link href="#action2">Link</Nav.Link>
-                  <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Nav.Item as="li">
+                    <Link to="/" className="nav-link">
+                      Home
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item as="li">
+                    <Link to="/about" className="nav-link">
+                      About
+                    </Link>
+                  </Nav.Item>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

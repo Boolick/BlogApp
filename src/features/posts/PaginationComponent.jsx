@@ -15,7 +15,6 @@ function PaginationComponent({
   currentPage,
 }) {
   const pageNumbers = [];
-
   for (let index = 1; index <= Math.ceil(totalPosts / postsPerPage); index++) {
     pageNumbers.push(index);
   }
@@ -24,13 +23,10 @@ function PaginationComponent({
   return (
     <div>
       <Pagination size="lg">
-        {/* 
-        <Pagination.First />
-        <Pagination.Prev onClick={() => paginate(currentPage-1)}/> */}
         {pageNumbers
           .filter((number) => number > leftSide && number < rightSide)
           .map((number) => (
-            <Pagination.Item 
+            <Pagination.Item
               key={number}
               active={number === currentPage}
               onClick={() => paginate(number)}
@@ -38,9 +34,7 @@ function PaginationComponent({
               {number}
             </Pagination.Item>
           ))}
-        {/*  <Pagination.Next onClick={() => paginate(currentPage+1)}/>
-        <Pagination.Last />
-  */} <Pagination.Ellipsis/>
+        <Pagination.Ellipsis />
       </Pagination>
     </div>
   );

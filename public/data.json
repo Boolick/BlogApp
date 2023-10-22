@@ -1,0 +1,23 @@
+{
+  "id": 0,
+  "name": "Alexander Bullo",
+  "username": "Alex",
+  "email": "bulloalexander77@gmail.com",
+  "address": {
+    "street": "Dao Tan",
+    "suite": "Suite 351",
+    "city": "Ha Noi",
+    "zipcode": "10000",
+    "geo": {
+      "lat": "44.8263",
+      "lng": "13.8412"
+    }
+  },
+  "phone": "+84 (35) 923 74 42",
+  "website": "Bullo.info",
+  "company": {
+    "name": "WB",
+    "catchPhrase": "Per aspera ad astra",
+    "bs": "revolutionize end-to-end systems"
+  }
+}
