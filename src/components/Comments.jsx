@@ -1,33 +1,49 @@
-import { Spinner } from "react-bootstrap";
-import { useGetCommentsQuery } from "../api/api";
+import { Spinner, Card, Alert } from "react-bootstrap";
+import { useEffect, useState } from "react";
+
+import { useGetCommentsQuery } from "../store/api/api";
 
 // eslint-disable-next-line react/prop-types
 function Comments({ postId }) {
   const { data: comments, isLoading, isError } = useGetCommentsQuery(postId);
-  if (isLoading) {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
-  }
+  const [delayLoading, setDelayLoading] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) {
+      setDelayLoading(true);
+      setTimeout(() => {
+        setDelayLoading(false);
+      }, 1500); // Задержка в 1.5 секунды
+    }
+  }, [isLoading]);
+
   if (isError) {
-    return <div>Error loading comments</div>;
+    return (
+      <Alert variant="danger" role="alert">
+        Error loading comments
+      </Alert>
+    );
   }
 
   return (
-    <div>
-      {comments && comments.length > 0 ? (
+    <Card>
+      {delayLoading ? (
+        <Spinner className="m-5" animation="border" role="status" />
+      ) : comments && comments.length > 0 ? (
         comments.map((comment) => (
           <div key={comment.id}>
-            <a>{comment.email}</a>
-            <p>{comment.body}</p>
+            <Card.Body>
+              <Card.Subtitle>{comment.email}</Card.Subtitle>
+              <Card.Text>{comment.body}</Card.Text>
+            </Card.Body>
           </div>
         ))
       ) : (
-        <p>No comments yet</p>
+        <Alert variant="info" role="info">
+          There is not comments yet!
+        </Alert>
       )}
-    </div>
+    </Card>
   );
 }
 
