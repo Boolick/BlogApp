@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Card,
   Spinner,
@@ -18,9 +19,16 @@ function User() {
   const [showPosts, setShowPosts] = useState(false);
   const navigate = useNavigate();
   const userId = Number(localStorage.getItem("userId"));
-  const { data: userPosts, isLoading: isLoadingPosts } =
-    useGetUsersPostsQuery(userId);
-  const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery();
+  const {
+    data: userPosts,
+    isLoading: isLoadingPosts,
+    isError: isErrorPosts,
+  } = useGetUsersPostsQuery(userId);
+  const {
+    data: users,
+    isLoading: isLoadingUsers,
+    isError: isErrorgUsers,
+  } = useGetUsersQuery();
 
   if (isLoadingPosts || isLoadingUsers) {
     return (
@@ -29,6 +37,15 @@ function User() {
       </Spinner>
     );
   }
+
+  if (isErrorgUsers) {
+    return (
+      <Alert variant="danger" role="alert">
+        Error loading
+      </Alert>
+    );
+  }
+
   const currentUser = users?.find((user) => user.id === userId);
   const address = currentUser.address;
   const company = currentUser.company;
@@ -59,9 +76,7 @@ function User() {
 
           <Col>
             <Card className="mb-3">
-              <Card.Body>
-                {currentUser && renderEntries(currentUser)};
-              </Card.Body>
+              <Card.Body>{currentUser && renderEntries(currentUser)}</Card.Body>
             </Card>
           </Col>
         </Row>
@@ -70,7 +85,7 @@ function User() {
             <Card className="card mb-3" style={{ minWidth: "250px" }}>
               <Card.Body>
                 <h2>Address</h2>
-                {currentUser && renderEntries(address)};
+                {currentUser && renderEntries(address)}
               </Card.Body>
             </Card>
           </Col>
@@ -78,36 +93,43 @@ function User() {
             <Card className="mb-3" style={{ minWidth: "250px" }}>
               <Card.Body>
                 <h2>Company</h2>
-                {currentUser && renderEntries(company)};
+                {currentUser && renderEntries(company)}
               </Card.Body>
             </Card>
-            <Button
-              className="mb-3"
-              variant="outline-success"
-              onClick={() => navigate("/")}
-            >
-              Back to main
-            </Button>
           </Col>
         </Row>
-        <Card className="mb-3">
-          <Button
-            onClick={() => setShowPosts(!showPosts)}
-            variant="outline-dark"
-          >
-            {showPosts ? "Close" : "User's comments"}
-          </Button>
+        <Button
+          className="m-1"
+          onClick={() => setShowPosts(!showPosts)}
+          variant="outline-dark"
+        >
+          {showPosts ? "Close" : "User's comments"}
+        </Button>
+        <Button
+          className="m-1"
+          variant="outline-success"
+          onClick={() => navigate("/")}
+        >
+          Back to main
+        </Button>
+        <Card className="mb-3" style={{ maxWidth: "670px" }}>
           <Collapse in={showPosts} timeout={2000}>
             <Card.Body>
               <div>
-                {showPosts &&
+                {isErrorPosts ? (
+                  <Alert variant="danger" role="alert">
+                    Error loading posts
+                  </Alert>
+                ) : (
+                  showPosts &&
                   userPosts &&
                   userPosts.map((userPost) => (
                     <Card.Text key={userPost.id}>
                       <strong>{userPost.title}</strong>
                       <p>{userPost.body}</p>
                     </Card.Text>
-                  ))}
+                  ))
+                )}
               </div>
             </Card.Body>
           </Collapse>
