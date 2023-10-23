@@ -1,6 +1,4 @@
-#  BlogApp
-![favicon-16x16](https://github.com/Boolick/BlogApp/assets/79834650/fb72b5a9-2bb8-458e-b113-541b5fd2beed)
-
+#  BlogApp ![favicon-32x32](https://github.com/Boolick/BlogApp/assets/79834650/2e84895f-0267-4fee-9322-86c7dfbb7d18)
 
 ## Описание
 
