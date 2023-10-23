@@ -4,6 +4,8 @@ import UserAvatar from "../components/UserAvatar";
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 
+import renderEntries from "../features/user/renderEntries";
+
 function About() {
   const navigate = useNavigate();
   const [data, setData] = useState();
@@ -50,20 +52,7 @@ function About() {
 
           <Col>
             <Card className="mb-3">
-              <Card.Body>
-                {data &&
-                  Object.entries(data).map(([key, value]) => {
-                    if (typeof value === "object") {
-                      return;
-                    } else {
-                      return (
-                        <Card.Text key={key}>
-                          <strong>{key}:</strong> {value}
-                        </Card.Text>
-                      );
-                    }
-                  })}
-              </Card.Body>
+              <Card.Body>{data && renderEntries(data)}</Card.Body>
             </Card>
           </Col>
         </Row>
@@ -72,21 +61,7 @@ function About() {
             <Card className="card mb-3" style={{ minWidth: "250px" }}>
               <Card.Body>
                 <h2>Address</h2>
-                {Object.entries(address).map(([key, value]) => {
-                  if (typeof value === "object") {
-                    return Object.entries(value).map(([subKey, subValue]) => (
-                      <Card.Text key={subKey}>
-                        <strong>{subKey}:</strong> {subValue}
-                      </Card.Text>
-                    ));
-                  } else {
-                    return (
-                      <Card.Text key={key}>
-                        <strong>{key}:</strong> {value}
-                      </Card.Text>
-                    );
-                  }
-                })}
+                {renderEntries(address)}
               </Card.Body>
             </Card>
           </Col>
@@ -94,14 +69,7 @@ function About() {
             <Card className="mb-3" style={{ minWidth: "250px" }}>
               <Card.Body>
                 <h2>Company</h2>
-                {Object.entries(company).map(([key, value]) => {
-                  return (
-                    <Card.Text key={key}>
-                      <strong>{key}: </strong>
-                      {value}
-                    </Card.Text>
-                  );
-                })}
+                {renderEntries(company)}
               </Card.Body>
             </Card>
             <Button
