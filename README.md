@@ -29,9 +29,7 @@
 ![image](https://github.com/Boolick/BlogApp/assets/79834650/6e13da6b-2e2c-4cb0-80b3-9f62b75b57a6)
 
 ## Ссылка на демо
-
- 
+https://cheerful-kashata-c0180d.netlify.app
 
 ## Контакты
-
 Если у вас есть вопросы или предложения, свяжитесь со мной по адресу: bulloalexander77@gmail.com
