@@ -1,8 +1,33 @@
-# React + Vite
+# Название вашего приложения
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+Это приложение является одностраничным приложением (SPA), созданным на React. Оно представляет собой сайт с постами, состоящий из трех страниц: список постов, информация о пользователе и страница "Обо мне".
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Технологии
+
+- React
+- Vite
+- React-bootstrap
+- React-router
+- Axios
+- Redux toolkit + RTK query
+- Git
+
+## Установка и запуск проекта
+
+Чтобы развернуть этот проект на другом компьютере, следуйте этим шагам:
+
+1. Клонируйте репозиторий на свой локальный компьютер с помощью команды `git clone https://github.com/Boolick/BlogApp.git`.
+2. Перейдите в каталог проекта с помощью команды `cd имя_каталога_проекта`.
+3. Установите все зависимости проекта с помощью команды `npm install`.
+4. Запустите проект в режиме разработки с помощью команды npm run dev. Приложение будет доступно по адресу http://localhost:5000 
+в вашем браузере (или другом порту, если порт 5000 занят).
+
+## Ссылка на демо
+
+ 
+
+## Контакты
+
+Если у вас есть вопросы или предложения, свяжитесь со мной по адресу: bulloalexander77@gmail.com
