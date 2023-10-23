@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import {
   Card,
   Alert,
@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+import { PageContext } from "../Context/PageContext";
 import SkeletonPost from "../components/Skeleton";
 import { useGetPostsQuery } from "../store/api/api";
 import Comments from "../components/Comments";
@@ -19,7 +20,7 @@ function Posts() {
   const navigate = useNavigate();
   const [openPostId, setOpenPostId] = useState(null);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); // для пагинации
+  const { currentPage, setCurrentPage } = useContext(PageContext); // для пагинации
   const postsPerPage = 5; // Количество постов на страницу
   const [isLoadImg, setIsLoadImg] = useState(false);
   const [shuffledPosts, setShuffledPosts] = useState([]);
